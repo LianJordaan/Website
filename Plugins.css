@@ -3,34 +3,38 @@
 }
 
 .u-section-1 .u-sheet-1 {
-  min-height: 642px;
+  min-height: 651px;
 }
 
 .u-section-1 .u-group-1 {
-  width: 1080px;
-  min-height: 546px;
-  margin: 48px auto 0;
+  min-height: 547px;
+  height: auto;
+  width: 1074px;
+  margin: 52px auto;
 }
 
 .u-section-1 .u-container-layout-1 {
-  padding: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .u-section-1 .u-text-1 {
   font-weight: 700;
-  margin: -504px auto 0;
+  margin: 0 auto;
 }
 
 .u-section-1 .u-text-2 {
-  font-size: 1.25rem;
-  font-weight: 300;
   width: 780px;
+  font-size: 1.25rem;
+  background-image: none;
+  font-weight: 300;
   margin: 19px auto 0;
 }
 
 .u-section-1 .u-btn-1 {
   background-image: none;
   text-decoration: underline !important;
+  text-transform: none;
   padding: 0;
 }
 
@@ -39,17 +43,15 @@
   text-transform: uppercase;
   font-size: 1.125rem;
   letter-spacing: 2px;
-  margin: 30px auto 90px;
+  margin: 30px auto 0;
   padding: 6px 24px 7px 23px;
 }
 
 @media (max-width: 1199px) {
   .u-section-1 .u-group-1 {
     width: 940px;
-  }
-
-  .u-section-1 .u-btn-1 {
-    text-transform: none;
+    margin-top: -195px;
+    height: auto;
   }
 }
 
@@ -68,21 +70,12 @@
     width: 540px;
   }
 
-  .u-section-1 .u-container-layout-1 {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
   .u-section-1 .u-text-2 {
     width: 540px;
   }
 }
 
 @media (max-width: 575px) {
-  .u-section-1 .u-sheet-1 {
-    min-height: 1009px;
-  }
-
   .u-section-1 .u-group-1 {
     width: 340px;
   }
@@ -90,117 +83,84 @@
   .u-section-1 .u-text-2 {
     width: 340px;
   }
-} .u-section-2 {
+}.u-section-2 .u-sheet-1 {
+  min-height: 100px;
+} .u-section-3 {
   background-image: none;
 }
 
-.u-section-2 .u-sheet-1 {
+.u-section-3 .u-sheet-1 {
   min-height: 514px;
 }
 
-.u-section-2 .u-group-1 {
+.u-section-3 .u-group-1 {
+  min-height: 443px;
   width: 1080px;
-  min-height: 418px;
   height: auto;
-  margin: 48px auto 0;
+  margin: 52px auto;
 }
 
-.u-section-2 .u-container-layout-1 {
-  padding: 30px;
+.u-section-3 .u-container-layout-1 {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
-.u-section-2 .u-text-1 {
+.u-section-3 .u-text-1 {
   font-weight: 700;
-  margin: -376px auto 0 357px;
+  margin: 37px auto 0;
 }
 
-.u-section-2 .u-text-2 {
+.u-section-3 .u-text-2 {
   font-size: 1.25rem;
+  background-image: none;
   font-weight: 300;
-  margin: 19px 191px 0 169px;
+  width: 780px;
+  margin: 34px auto 0;
 }
 
-.u-section-2 .u-btn-1 {
+.u-section-3 .u-btn-1 {
   background-image: none;
   text-transform: uppercase;
   font-size: 1.125rem;
   letter-spacing: 2px;
-  margin: 30px auto 90px 477px;
+  margin: 30px auto 0;
   padding: 6px 24px 7px 23px;
 }
 
 @media (max-width: 1199px) {
-  .u-section-2 .u-group-1 {
+  .u-section-3 .u-group-1 {
     width: 940px;
-    margin-left: 0;
-    margin-right: 0;
+    margin-top: -195px;
     height: auto;
-  }
-
-  .u-section-2 .u-text-1 {
-    margin-left: 294px;
-  }
-
-  .u-section-2 .u-text-2 {
-    width: 780px;
-    margin-left: 69px;
-    margin-right: 91px;
-  }
-
-  .u-section-2 .u-btn-1 {
-    margin-left: 277px;
   }
 }
 
 @media (max-width: 991px) {
-  .u-section-2 .u-group-1 {
+  .u-section-3 .u-group-1 {
     width: 720px;
   }
 
-  .u-section-2 .u-text-1 {
-    margin-left: 225px;
-  }
-
-  .u-section-2 .u-text-2 {
-    margin-left: 0;
-    margin-right: 0;
-    width: auto;
-  }
-
-  .u-section-2 .u-btn-1 {
-    margin-left: 57px;
+  .u-section-3 .u-text-2 {
+    width: 720px;
   }
 }
 
 @media (max-width: 767px) {
-  .u-section-2 .u-group-1 {
+  .u-section-3 .u-group-1 {
     width: 540px;
   }
 
-  .u-section-2 .u-container-layout-1 {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  .u-section-2 .u-text-1 {
-    margin-left: 169px;
-  }
-
-  .u-section-2 .u-btn-1 {
-    margin-left: 0;
+  .u-section-3 .u-text-2 {
+    width: 540px;
   }
 }
 
 @media (max-width: 575px) {
-  .u-section-2 .u-sheet-1 {
-    min-height: 1009px;
-  }
-
-  .u-section-2 .u-group-1 {
+  .u-section-3 .u-group-1 {
     width: 340px;
   }
 
-  .u-section-2 .u-text-1 {
-    margin-left: 106px;
+  .u-section-3 .u-text-2 {
+    width: 340px;
   }
 }
