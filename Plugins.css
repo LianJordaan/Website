@@ -31,6 +31,7 @@
 
 .u-section-1 .u-btn-1 {
   background-image: none;
+  text-decoration: underline !important;
   padding: 0;
 }
 
@@ -47,6 +48,10 @@
   .u-section-1 .u-group-1 {
     width: 940px;
     height: auto;
+  }
+
+  .u-section-1 .u-btn-1 {
+    text-transform: none;
   }
 }
 
