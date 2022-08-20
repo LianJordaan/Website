@@ -9,6 +9,7 @@
 .u-section-1 .u-group-1 {
   min-height: 534px;
   width: 1080px;
+  height: auto;
   margin: 53px auto;
 }
 
@@ -48,6 +49,7 @@
 @media (max-width: 1199px) {
   .u-section-1 .u-group-1 {
     width: 940px;
+    height: auto;
   }
 
   .u-section-1 .u-text-2 {
