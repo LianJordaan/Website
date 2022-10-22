@@ -162,9 +162,9 @@ html, body {
 }
 
 .aboutme {
-	margin: .5%;
-	width: 99vw;
-	height: 92.5vh;
+	margin: .7%;
+	width: 98vw;
+	height: 91.5vh;
 	border: 1px solid gray;
 	display: flex;
 	align-items: center;
