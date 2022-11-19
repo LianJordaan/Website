@@ -1,0 +1,789 @@
+#This script was made by Lian.
+#Discord: Lian#1199
+#Minecraft Username: LianJordaan
+#YouTube: LianJordaan
+#
+#
+#This skript was made entirely by Lian. Please do not steal the code or take credit for it. I have spend a very long time on this.
+#
+#
+#Function to use if you want to give backpacks: GiveBackpack(id, level, player to give to, executor, is forced):
+#Example:
+#GiveBackpack("%GenerateNewID()%" parsed as integer, 1, player, "%player%", false)
+#
+#
+#Want to upgrade someones backpack?
+#GiveBackpack(get backpack ID parsed as integer, get the new size, player to give to, executor 'most likly console', true)
+#
+#You would want to use true at the end to force give them a new backpack with the same ID
+#
+#
+#
+#For more info please visit my website at: https://lianjordaan.github.io/Website/
+#
+
+#██████╗  █████╗  █████╗ ██╗  ██╗██████╗  █████╗  █████╗ ██╗  ██╗ ██████╗
+#██╔══██╗██╔══██╗██╔══██╗██║ ██╔╝██╔══██╗██╔══██╗██╔══██╗██║ ██╔╝██╔════╝
+#██████╦╝███████║██║  ╚═╝█████═╝ ██████╔╝███████║██║  ╚═╝█████═╝ ╚█████╗ 
+#██╔══██╗██╔══██║██║  ██╗██╔═██╗ ██╔═══╝ ██╔══██║██║  ██╗██╔═██╗  ╚═══██╗
+#██████╦╝██║  ██║╚█████╔╝██║ ╚██╗██║     ██║  ██║╚█████╔╝██║ ╚██╗██████╔╝
+#╚═════╝ ╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝╚═════╝                                                                      
+
+#============================================Options Start============================================
+
+options:
+	SkullNBT: {SkullOwner:{Id:f7d90747-ceb2-7e7c-7a25-bcb2e2165d5d,Properties:{textures:[{Value:eyJ0aW1lc3RhbXAiOjE0MzQ5NDk0MzgyMzQsInByb2ZpbGVJZCI6IjUwNzk4YjJhN2QxYjQxYTRiNmFlYzRiNWUwOWJjMTcxIiwicHJvZmlsZU5hbWUiOiJFbHN3ZXlyIiwidGV4dHVyZXMiOnsiU0tJTiI6eyJ1cmwiOiJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzgzNTFlNTA1OTg5ODM4ZTI3Mjg3ZTdhZmJjN2Y5N2U3OTZjYWI1ZjM1OThhNzYxNjBjMTMxYzk0MGQwYzUifX19 }]}}}
+	MaxLevel: 1000
+	MaxLevelTabComplete: 99
+	BackpackItemLimit: gray stained glass pane named " "
+	Prefix: &6Back&epacks &8➡&r
+
+	AdminPermission: backpakcs.admin or backpacks.*
+	GivePermission: backpacks.give
+	ClearPermission: backpacks.clear
+	DeletePermission: backpacks.delete
+	ReloadPermission: backpacks.reload
+	ForceGivePermission: backpacks.forcegive
+	ListPermission: backpacks.list
+	OpenPermission: backpacks.open
+	ViewPermission: backpacks.view
+	WipePermission: backpacks.wipe
+
+	BackpackCheckDelay: 1 second
+
+	FatalError: &4ERROR! Please check console for more info!
+	FatalErrorConsole: &cA fatal error has occurred with &6Back&epacks&c! Please contact the creator of this script to fix this problem!
+	ArgsErrorWipe: &cCorrect Usage: &6/backpack wipe -confirm&r
+	ArgsErrorOpen: &cCorrect Usage: &6/backpack open <id> [<page>]&r
+	ArgsErrorView: &cCorrect Usage: &6/backpack view <id> [<page>]&r
+	ArgsErrorList: &cCorrect Usage: &6/backpack list [<page>] [<level>]&r
+	ArgsErrorForcegive: &cCorrect Usage: &6/backpack forcegive <id> <level> <player>&r
+	ArgsErrorgive: &cCorrect Usage: &6/backpack give <id> <level> <player>&r
+	ArgsErrorClear: &cCorrect Usage: &6/backpack clear <id>&r
+	ArgsErrorDelete: &cCorrect Usage: &6/backpack delete <id>&r
+
+#============================================Options End============================================
+
+#██████╗  █████╗   ███╗  ██╗ █████╗ ████████╗  ███████╗██████╗ ██╗████████╗  ██████╗ ███████╗██╗      █████╗  ██╗       ██╗  ████████╗██╗  ██╗██╗ ██████╗
+#██╔══██╗██╔══██╗  ████╗ ██║██╔══██╗╚══██╔══╝  ██╔════╝██╔══██╗██║╚══██╔══╝  ██╔══██╗██╔════╝██║     ██╔══██╗ ██║  ██╗  ██║  ╚══██╔══╝██║  ██║██║██╔════╝
+#██║  ██║██║  ██║  ██╔██╗██║██║  ██║   ██║     █████╗  ██║  ██║██║   ██║     ██████╦╝█████╗  ██║     ██║  ██║ ╚██╗████╗██╔╝     ██║   ███████║██║╚█████╗ 
+#██║  ██║██║  ██║  ██║╚████║██║  ██║   ██║     ██╔══╝  ██║  ██║██║   ██║     ██╔══██╗██╔══╝  ██║     ██║  ██║  ████╔═████║      ██║   ██╔══██║██║ ╚═══██╗
+#██████╔╝╚█████╔╝  ██║ ╚███║╚█████╔╝   ██║     ███████╗██████╔╝██║   ██║     ██████╦╝███████╗███████╗╚█████╔╝  ╚██╔╝ ╚██╔╝      ██║   ██║  ██║██║██████╔╝
+#╚═════╝  ╚════╝   ╚═╝  ╚══╝ ╚════╝    ╚═╝     ╚══════╝╚═════╝ ╚═╝   ╚═╝     ╚═════╝ ╚══════╝╚══════╝ ╚════╝    ╚═╝   ╚═╝       ╚═╝   ╚═╝  ╚═╝╚═╝╚═════╝ 
+
+#============================================Code Start============================================
+
+on right click:
+	if name of event-item = "&eBackpack":
+		cancel event
+		OpenBackpack(player, event-item)
+
+on inventory close:
+	if name of player's current inventory contains "&eBackpack | ID: [":
+		set {_id} to GetBackpackID(player)
+		set {_level} to GetBackpackLevel(player)
+		set {_invtitle} to name of player's current inventory
+		replace all "&eBackpack | ID: [%{_id}%] | Level: [%{_level}%] | Page: " in {_invtitle} with ""
+		set {_pages::*} to {_invtitle} split at "/"
+		SaveBackpack(player, {_level}, {_id}, {_pages::1} parsed as integer)
+
+
+
+function SaveBackpack(p: player, level: integer, id: integer, page: integer):
+	if {_level} <= 5:
+		set {_slot} to 0
+		loop {_level} * 9 times:
+			if name of slot {_slot} of {_p}'s current inventory = "&eBackpack":
+				set {_item} to slot {_slot} of {_p}'s current inventory
+				ReturnBackpack({_p}, {_item})
+				set slot {_slot} of {_p}'s current inventory to air
+			set {Backpack::%{_id}%::%{_page}%::%{_slot}%} to slot {_slot} of {_p}'s current inventory
+			if slot {_slot} of {_p}'s current inventory is air:
+				delete {Backpack::%{_id}%::1::%{_slot}%}
+			add 1 to {_slot}
+	else if {_level} > 5:
+		set {_slot} to 0
+		loop 45 times:
+			if name of slot {_slot} of {_p}'s current inventory = "&eBackpack":
+				set {_item} to slot {_slot} of {_p}'s current inventory
+				ReturnBackpack({_p}, {_item})
+				set slot {_slot} of {_p}'s current inventory to air
+			if slot {_slot} of {_p}'s current inventory != {@BackpackItemLimit}:
+				set {Backpack::%{_id}%::%{_page}%::%{_slot}%} to slot {_slot} of {_p}'s current inventory
+				if slot {_slot} of {_p}'s current inventory is air:
+					delete {Backpack::%{_id}%::%{_page}%::%{_slot}%}
+			add 1 to {_slot}
+
+
+function OpenBackpack(p: player, i: item):
+	loop lore of {_i}:
+		if loop-value contains "&7ID: ":
+			set {_id} to loop-value
+			replace all "&7ID: " with "" in {_id}
+			set {_id} to {_id} parsed as integer
+	if {Backpack::IDs::*} does not contain {_id}:
+		send "{@Prefix} &cThat backpack was deleted by an admin!" to {_p}
+		remove 1 of {_i} from {_p}'s inventory
+		stop
+	loop lore of {_i}:
+		if loop-value contains "&7Level: &e":
+			set {_level} to loop-value
+			replace all "&7Level: &e" with "" in {_level}
+			set {_level} to {_level} parsed as integer
+	if {_level} <= 5:
+		open chest with {_level} rows named "&eBackpack | ID: [%{_id}%] | Level: [%{_level}%] | Page: 1/1" to {_p}
+		set {_slot} to 0
+		loop {_level} * 9 times:
+			set slot {_slot} of {_p}'s current inventory to {Backpack::%{_id}%::1::%{_slot}%}
+			add 1 to {_slot}
+	else:
+		OpenLargeBackpack({_level}, {_id}, 1, 6, {_p})
+
+
+function ViewLargeBackpack(level: integer, id: integer, pagenumber: integer, rows: integer, p: player):
+	set {_page::rows} to {_rows}
+	# This is the amount of rows in the GUI.
+	set {_page::max} to {_pagenumber} * (({_page::rows} - 1) * 9)
+	set {_page::min} to ({_pagenumber} - 1) * (({_page::rows} - 1) * 9)
+	set {_page::posts} to 0
+	set {_page::count} to 0
+	set {_page::number} to {_pagenumber}
+	# These specify the amount of items that should be displayed on each page.
+	set {_pages} to ({_level} * 9) / (({_page::rows} - 1) * 9)
+	set {_pages} to "%{_pages}%"
+	set {_pages::*} to {_pages} split at "."
+	# The only reason I have to set a variable to itself is because Skript won't allow me to do this any other way.
+	set {_page::total} to {_pages::1}
+	if {_pages::2} is set:
+		set {_page::total} to {_page::total} parsed as an integer
+		add 1 to {_page::total}
+	# This will grab the total amount of pages.
+	if inventory name of {_p}'s current inventory does not contain "&eViewing Backpack | ID: [%{_id}%] | Level: [%{_level}%] | Page: ":
+		open chest with {_page::rows} rows named "&eViewing Backpack | ID: [%{_id}%] | Level: [%{_level}%] | Page: %{_page::number}%/%{_page::total}%" to {_p}
+	# Only open a new chest if the {_p} isn't already in the GUI.
+	else:
+		loop ({_page::rows} * 9) times:
+			set slot (loop-number - 1) of {_p}'s current inventory to air
+			set name of {_p}'s current inventory to "&eViewing Backpack | ID: [%{_id}%] | Level: [%{_level}%] | Page: %{_page::number}%/%{_page::total}%"
+	# Reset the GUI if the {_p} is already in it.
+
+	loop {_rows} * 9 times:
+		set slot {_glassnum} of {_p}'s current inventory to {@BackpackItemLimit}
+		add 1 to {_glassnum}
+
+	if {_page::number} is greater than 1:
+		set slot (({_page::rows} - 1) * 9) of {_p}'s current inventory to piston named "&dPrevious Page"
+	# Display a previous page button only if the user is not on the first page.
+	#message "&8&m----&6&lItems Set For GUI's&8&m----" to {_p}
+	loop {_level} * 9 times:
+		if {_page::count} is less than {_page::max}:
+			if {_page::count} is greater than or equal to {_page::min}:
+				set {_slot} to 0
+				loop {_page::posts} + 1 times:
+					set {_i} to air
+					set {_i} to {Backpack::%{_id}%::%{_page::number}%::%{_slot}%}
+					if {_i} is not set:
+						set {_i} to air
+					set slot {_slot} of {_p}'s current inventory to {_i}
+					add 1 to {_slot}
+				add 1 to {_page::posts}
+		add 1 to {_page::count}
+	#message "&f " to {_p}
+						# Only display an item if certain page specifications are met.
+	set {_id} to GetBackpackID({_p})
+	set {_level} to GetBackpackLevel({_p})
+	
+	set {_page} to name of {_p}'s current inventory
+	replace all "&eViewing Backpack | ID: [%{_id}%] | Level: [%{_level}%] | Page: " in {_page} with "" 
+	set {_pages::*} to {_page} split at "/"
+	set slot ({_page::rows} * 9 - 1) of {_p}'s current inventory to piston named "&dNext Page"
+	if {_pages::1} parsed as integer >= {_pages::2} parsed as integer:
+		set slot ({_page::rows} * 9 - 1) of {_p}'s current inventory to {@BackpackItemLimit}
+
+function OpenLargeBackpack(level: integer, id: integer, pagenumber: integer, rows: integer, p: player):
+	set {_page::rows} to {_rows}
+	# This is the amount of rows in the GUI.
+	set {_page::max} to {_pagenumber} * (({_page::rows} - 1) * 9)
+	set {_page::min} to ({_pagenumber} - 1) * (({_page::rows} - 1) * 9)
+	set {_page::posts} to 0
+	set {_page::count} to 0
+	set {_page::number} to {_pagenumber}
+	# These specify the amount of items that should be displayed on each page.
+	set {_pages} to ({_level} * 9) / (({_page::rows} - 1) * 9)
+	set {_pages} to "%{_pages}%"
+	set {_pages::*} to {_pages} split at "."
+	# The only reason I have to set a variable to itself is because Skript won't allow me to do this any other way.
+	set {_page::total} to {_pages::1}
+	if {_pages::2} is set:
+		set {_page::total} to {_page::total} parsed as an integer
+		add 1 to {_page::total}
+	# This will grab the total amount of pages.
+	if inventory name of {_p}'s current inventory does not contain "&eBackpack | ID: [%{_id}%] | Level: [%{_level}%] | Page: ":
+		open chest with {_page::rows} rows named "&eBackpack | ID: [%{_id}%] | Level: [%{_level}%] | Page: %{_page::number}%/%{_page::total}%" to {_p}
+	# Only open a new chest if the {_p} isn't already in the GUI.
+	else:
+		loop ({_page::rows} * 9) times:
+			set slot (loop-number - 1) of {_p}'s current inventory to air
+			set name of {_p}'s current inventory to "&eBackpack | ID: [%{_id}%] | Level: [%{_level}%] | Page: %{_page::number}%/%{_page::total}%"
+	# Reset the GUI if the {_p} is already in it.
+
+	loop {_rows} * 9 times:
+		set slot {_glassnum} of {_p}'s current inventory to {@BackpackItemLimit}
+		add 1 to {_glassnum}
+
+	if {_page::number} is greater than 1:
+		set slot (({_page::rows} - 1) * 9) of {_p}'s current inventory to piston named "&dPrevious Page"
+	# Display a previous page button only if the user is not on the first page.
+	#message "&8&m----&6&lItems Set For GUI's&8&m----" to {_p}
+	loop {_level} * 9 times:
+		if {_page::count} is less than {_page::max}:
+			if {_page::count} is greater than or equal to {_page::min}:
+				set {_slot} to 0
+				loop {_page::posts} + 1 times:
+					set {_i} to air
+					set {_i} to {Backpack::%{_id}%::%{_page::number}%::%{_slot}%}
+					if {_i} is not set:
+						set {_i} to air
+					set slot {_slot} of {_p}'s current inventory to {_i}
+					add 1 to {_slot}
+				add 1 to {_page::posts}
+		add 1 to {_page::count}
+	#message "&f " to {_p}
+						# Only display an item if certain page specifications are met.
+	set {_id} to GetBackpackID({_p})
+	set {_level} to GetBackpackLevel({_p})
+	
+	set {_page} to name of {_p}'s current inventory
+	replace all "&eBackpack | ID: [%{_id}%] | Level: [%{_level}%] | Page: " in {_page} with "" 
+	set {_pages::*} to {_page} split at "/"
+	set slot ({_page::rows} * 9 - 1) of {_p}'s current inventory to piston named "&dNext Page"
+	if {_pages::1} parsed as integer >= {_pages::2} parsed as integer:
+		set slot ({_page::rows} * 9 - 1) of {_p}'s current inventory to {@BackpackItemLimit}
+		
+function GetBackpackID(p: player) :: integer:
+	set {_inv} to name of {_p}'s current inventory
+	set {_inv::*} to {_inv} split at " | "
+	replace all "ID: [" and "]" in {_inv::2} with ""
+	set {_num} to {_inv::2} parsed as integer
+	return {_num}
+
+function GetBackpackLevel(p: player) :: integer:
+	set {_inv} to name of {_p}'s current inventory
+	set {_inv::*} to {_inv} split at " | "
+	replace all "Level: [" and "]" in {_inv::3} with ""
+	set {_num} to {_inv::3} parsed as integer
+	return {_num}
+
+every {@BackpackCheckDelay}:
+	loop all players:
+		if name of loop-player's current inventory contains "&eBackpack | ID: [":
+			loop all items in loop-player's current inventory:
+				if loop-item's name = "&eBackpack":
+					ReturnBackpack(loop-player, loop-item)
+					set loop-item to air
+					stop loop
+
+
+function ReturnBackpack(p: player, i: item):
+	if {_p} has enough space for {_i}:
+		give {_i} to {_p}
+		send "{@Prefix} &cYou can not put backpacks inside one another! Therefore it has been given back to you!" to {_p}
+	else:
+		set {_loc} to {_p}'s location
+		add 0.5 to y-coordinate of {_loc}
+		drop {_i} at {_loc}
+		send "{@Prefix} &cYou can not put backpacks inside one another! Your inventory was full and therefore it was dropped on the ground!" to {_p}
+
+
+on inventory click:
+	if event-item's name is "&eBackpack":
+		if inventory name of player's inventory contains "&eBackpack | ID: [" or "&eViewing Backpack | ID: [":
+			cancel event
+	if inventory name of player's inventory contains "&eViewing Backpack | ID: [":
+		cancel event
+	if inventory name of player's current inventory contains "&eViewing Backpack | ID: [":
+		cancel event
+		set {_page::rows} to 6
+
+		set {_id} to GetBackpackID(player)
+		set {_level} to GetBackpackLevel(player)
+		
+		set {_page} to inventory name of player's current inventory
+		replace all "&eViewing Backpack | ID: [%{_id}%] | Level: [%{_level}%] | Page: " in {_page} with ""
+		set {_pages::*} to {_page} split at "/"
+		# Grab the page that the player is currently on.
+ 
+		if clicked slot is (({_page::rows} - 1) * 9):
+			if event-item's name is "&dPrevious Page":
+				if {_pages::1} parsed as an integer is greater than 1:
+					ViewLargeBackpack({_level}, {_id}, {_pages::1} parsed as an integer - 1, 6, player)
+					# Open the previous page to the user if they are not already on it.
+				else:
+					close inventory of player
+					send "{@Prefix} &cYou are already on the first page."
+		else if clicked slot is ({_page::rows} * 9 - 1):
+			if event-item's name is "&dNext Page":
+				ViewLargeBackpack({_level}, {_id}, {_pages::1} parsed as an integer + 1, 6, player)
+
+	else if inventory name of player's current inventory contains "&eBackpack | ID: [":
+		if event-item's name is "&dPrevious Page" or "&dNext Page" or " ":
+			cancel event
+		if click type is swap offhand:
+			cancel event
+		set {_page::rows} to 6
+
+		set {_id} to GetBackpackID(player)
+		set {_level} to GetBackpackLevel(player)
+		
+		set {_page} to inventory name of player's current inventory
+		replace all "&eBackpack | ID: [%{_id}%] | Level: [%{_level}%] | Page: " in {_page} with ""
+		set {_pages::*} to {_page} split at "/"
+		# Grab the page that the player is currently on.
+ 
+		if clicked slot is (({_page::rows} - 1) * 9):
+			if event-item's name is "&dPrevious Page":
+				if {_pages::1} parsed as an integer is greater than 1:
+					OpenLargeBackpack({_level}, {_id}, {_pages::1} parsed as an integer - 1, 6, player)
+					# Open the previous page to the user if they are not already on it.
+				else:
+					close inventory of player
+					send "{@Prefix} &cYou are already on the first page."
+		else if clicked slot is ({_page::rows} * 9 - 1):
+			if event-item's name is "&dNext Page":
+				OpenLargeBackpack({_level}, {_id}, {_pages::1} parsed as an integer + 1, 6, player)
+	else if inventory name of player's current inventory contains "&eBackpack list | Level: [":
+		cancel event
+		set {_page::rows} to 6
+
+		set {_tempget::*} to split name of player's current inventory at " | "
+
+		set {_level} to {_tempget::2}
+		replace all "[" and " " and "Level:" and "]" with "" in {_level}
+		
+		set {_page} to inventory name of player's current inventory
+		replace all "&eBackpack list | Level: [%{_level}%] | Page: " in {_page} with ""
+		set {_pages::*} to {_page} split at "/"
+		# Grab the page that the player is currently on.
+
+		if name of event-item contains "&eBackpack":
+			if lore of event-item does not contain "level":
+				set {_loreofitem::*} to lore of event-item
+				loop {_loreofitem::*}:
+					if "%loop-value%" contains "ID:":
+						set {_id} to loop-value
+						stop loop
+				replace all "&7ID: " with "" in {_id}
+				set {_id} to {_id} parsed as integer
+				if click type is left mouse button:
+					OpenLargeBackpack({_level} parsed as integer, {_id}, 1, 6, player)
+				else if click type is right mouse button:
+					ViewLargeBackpack({_level} parsed as integer, {_id}, 1, 6, player)
+ 
+		if clicked slot is (({_page::rows} - 1) * 9):
+			if event-item's name is "&dPrevious Page":
+				if {_pages::1} parsed as an integer is greater than 1:
+					ListBackpacks({_pages::1} parsed as an integer - 1, 6, player, {_level} parsed as integer)
+					# Open the previous page to the user if they are not already on it.
+				else:
+					close inventory of player
+					send "{@Prefix} &cYou are already on the first page."
+		else if clicked slot is ({_page::rows} * 9 - 1):
+			if event-item's name is "&dNext Page":
+				ListBackpacks({_pages::1} parsed as an integer + 1, 6, player, {_level} parsed as integer)
+
+function ListBackpacks(pagenumber: integer, rows: integer, p: player, level: integer = {@MaxLevel}):
+	set {_page::rows} to {_rows}
+	# This is the amount of rows in the GUI.
+	set {_page::max} to {_pagenumber} * (({_page::rows} - 1) * 9)
+	set {_page::min} to ({_pagenumber} - 1) * (({_page::rows} - 1) * 9)
+	set {_page::posts} to 0
+	set {_page::count} to 0
+	set {_page::number} to {_pagenumber}
+	# These specify the amount of items that should be displayed on each page.
+	set {_pages} to size of {Backpack::IDs::*} / (({_page::rows} - 1) * 9)
+	set {_pages} to "%{_pages}%"
+	set {_pages::*} to {_pages} split at "."
+	# The only reason I have to set a variable to itself is because Skript won't allow me to do this any other way.
+	set {_page::total} to {_pages::1}
+	if {_pages::2} is set:
+		set {_page::total} to {_page::total} parsed as an integer
+		add 1 to {_page::total}
+	# This will grab the total amount of pages.
+	if inventory name of {_p}'s current inventory does not contain "&eBackpack list":
+		open chest with {_page::rows} rows named "&eBackpack list | Level: [%{_level}%] | Page: %{_page::number}%/%{_page::total}%" to {_p}
+	# Only open a new chest if the {_p} isn't already in the GUI.
+	else:
+		loop ({_page::rows} * 9) times:
+			set slot (loop-number - 1) of {_p}'s current inventory to air
+			set name of {_p}'s current inventory to "&eBackpack list | Level: [%{_level}%] | Page: %{_page::number}%/%{_page::total}%"
+	# Reset the GUI if the {_p} is already in it.
+
+
+	loop {_rows} * 9 times:
+		set slot {_glassnum} of {_p}'s current inventory to {@BackpackItemLimit}
+		add 1 to {_glassnum}
+
+	if {_page::number} is greater than 1:
+		set slot (({_page::rows} - 1) * 9) of {_p}'s current inventory to piston named "&dPrevious Page"
+	# Display a previous page button only if the user is not on the first page.
+	#message "&8&m----&6&lItems Set For GUI's&8&m----" to {_p}
+
+	loop {Backpack::IDs::*}:
+		add 1 to {_tempnum}
+		set {_id} to loop-value-1
+		set {_l} to {_level}
+		set {_backpack} to player skull with nbt "{@SkullNBT}"
+		set name of {_backpack} to "&eBackpack"
+		#loop {Backpack::%{_id}%::*}:
+		delete {_lore::*}
+		add " " to {_lore::*}
+		#add "&7Level: &e%{_l}%" to {_lore::*}
+		#add "&7Size: &e%{_l} * 9%" to {_lore::*}
+		add "&7ID: %{_id}%" to {_lore::*}
+		add " " to {_lore::*}
+		add "&eLeft Click &7to open" to {_lore::*}
+		add "&eRight Click &7to view" to {_lore::*}
+		set {_num} to 1
+		loop {_lore::*}:
+			set line {_num} of lore of {_backpack} to loop-value-2
+			add 1 to {_num}
+		set {_TempBackpacks::%{_tempnum}%} to {_backpack}
+
+	loop {_TempBackpacks::*}:
+		if {_page::count} is less than {_page::max}:
+			if {_page::count} is greater than or equal to {_page::min}:
+				set slot {_page::posts} of {_p}'s current inventory to {_TempBackpacks::%loop-index-1%}
+				add 1 to {_page::posts}
+		add 1 to {_page::count}
+	#message "&f " to {_p}
+						# Only display an item if certain page specifications are met.
+	set {_page} to name of {_p}'s current inventory
+	replace all "&eBackpack list | Level: [%{_level}%] | Page: " in {_page} with ""
+	set {_pages::*} to {_page} split at "/"
+	set slot ({_page::rows} * 9 - 1) of {_p}'s current inventory to piston named "&dNext Page"
+	if {_pages::1} parsed as integer >= {_pages::2} parsed as integer:
+		set slot ({_page::rows} * 9 - 1) of {_p}'s current inventory to {@BackpackItemLimit}
+
+function GenerateNewID() :: text:
+	if {Backpack::IDs::*} is set:
+		loop {Backpack::IDs::*}:
+			add 1 to {_size}
+			if {_low.to.high.list::%loop-value%} is not set:
+				set {_low.to.high.list::%loop-value%} to loop-index
+			else:
+				set {_n} to 0
+				loop {_size} times:
+					set {_n} to {_n}+1
+					{_low.to.high.list::%loop-value-1%.%{_n}%} is not set:
+						set {_low.to.high.list::%loop-value-1%.%{_n}%} to loop-index
+						stop loop
+		set {_n} to size of {_low.to.high.list::*}
+		loop {_low.to.high.list::*}:
+			set {_high.to.low.list::%{_n}%} to loop-value
+			set {_n} to {_n}-1
+		set {_a} to {_high.to.low.list::1} parsed as integer + 1
+		return "%{_a}%"
+	else:
+		return "1"
+
+function GenerateBackpackLevels() :: objects:
+	loop {@MaxLevelTabComplete} times:
+		add loop-value to {_numbers::*}
+	return {_numbers::*}
+
+function BPCheckPermission(p: player, perm: text) :: boolean:
+	if {_p} has permission "%{_perm}%":
+		return true
+	else:
+		return false
+
+on tab complete of "/backpack":
+	set {_TabCompleteForBackpacks::*} to "help" and "author" and "download"
+	add "give" to {_TabCompleteForBackpacks::*} if player has permission "{@GivePermission}" or "{@AdminPermission}"
+	add "clear" to {_TabCompleteForBackpacks::*} if player has permission "{@ClearPermission}" or "{@AdminPermission}"
+	add "delete" to {_TabCompleteForBackpacks::*} if player has permission "{@DeletePermission}" or "{@AdminPermission}"
+	add "reload" to {_TabCompleteForBackpacks::*} if player has permission "{@ReloadPermission}" or "{@AdminPermission}"
+	add "forcegive" to {_TabCompleteForBackpacks::*} if player has permission "{@ForceGivePermission}" or "{@AdminPermission}"
+	add "list" to {_TabCompleteForBackpacks::*} if player has permission "{@ListPermission}" or "{@AdminPermission}"
+	add "open" to {_TabCompleteForBackpacks::*} if player has permission "{@OpenPermission}" or "{@AdminPermission}"
+	add "view" to {_TabCompleteForBackpacks::*} if player has permission "{@ViewPermission}" or "{@AdminPermission}"
+	add "wipe" to {_TabCompleteForBackpacks::*} if player has permission "{@WipePermission}" or "{@AdminPermission}"
+
+	set tab completions for position 1 to {_TabCompleteForBackpacks::*}
+	if tab arg-1 = "give":
+		BPCheckPermission(player, "{@GivePermission}") or BPCheckPermission(player, "{@AdminPermission}") = true
+		set tab completions for position 2 to GenerateNewID()
+		if tab arg-2 is set:
+			set tab completions for position 3 to GenerateBackpackLevels()
+			if tab arg-3 is set:
+				set tab completions for position 4 to all players
+	if tab arg-1 = "forcegive":
+		BPCheckPermission(player, "{@ForceGivePermission}") or BPCheckPermission(player, "{@AdminPermission}") = true
+		set tab completions for position 2 to {Backpack::IDs::*}
+		if tab arg-2 is set:
+			set tab completions for position 3 to GenerateBackpackLevels()
+			if tab arg-3 is set:
+				set tab completions for position 4 to all players
+	if tab arg-1 = "view":
+		BPCheckPermission(player, "{@ViewPermission}") or BPCheckPermission(player, "{@AdminPermission}") = true
+		set tab completions for position 2 to {Backpack::IDs::*}
+	if tab arg-1 = "open":
+		BPCheckPermission(player, "{@OpenPermission}") or BPCheckPermission(player, "{@AdminPermission}") = true
+		set tab completions for position 2 to {Backpack::IDs::*}
+	if tab arg-1 = "clear":
+		BPCheckPermission(player, "{@ClearPermission}") or BPCheckPermission(player, "{@AdminPermission}") = true
+		set tab completions for position 2 to {Backpack::IDs::*}
+	if tab arg-1 = "delete":
+		BPCheckPermission(player, "{@DeletePermission}") or BPCheckPermission(player, "{@AdminPermission}") = true
+		set tab completions for position 2 to {Backpack::IDs::*}
+	if tab arg-1 = "reload":
+		BPCheckPermission(player, "{@ReloadPermission}") or BPCheckPermission(player, "{@AdminPermission}") = true
+		set tab completions for position 2 to "-s"
+	if tab arg-1 = "wipe":
+		BPCheckPermission(player, "{@WipePermission}") or BPCheckPermission(player, "{@AdminPermission}") = true
+		set tab completions for position 2 to "-confirm"
+
+
+function BackpackHelp(p: player):
+	send " " to {_p}
+	send "&3&m                              &r&6Backpack Help&3&m                              &r" to {_p}
+	send "&eDefault Commands:" to {_p}
+	send "&e&m  &r &6/backpack help &7&o(displays this message)" to {_p}
+	send "&e&m  &r &6/backpack download &7&o(gives link to download this script)" to {_p}
+	send "&e&m  &r &6/backpack author &7&o(display info about the author)" to {_p}
+	send " " to {_p}
+	send "&cOther Commands:" to {_p} if BPCheckPermission({_p}, "{@ClearPermission}") or BPCheckPermission({_p}, "{@DeletePermission}") or BPCheckPermission({_p}, "{@WipePermission}") or BPCheckPermission({_p}, "{@ViewPermission}") or BPCheckPermission({_p}, "{@ReloadPermission}") or BPCheckPermission({_p}, "{@OpenPermission}") or BPCheckPermission({_p}, "{@ListPermission}") or BPCheckPermission({_p}, "{@GivePermission}") or BPCheckPermission({_p}, "{@ForceGivePermission}") or BPCheckPermission({_p}, "{@AdminPermission}") = true
+	send "&c&m  &r &3/backpack clear <id> &7&o(clears the contents of the backpack with the given ID)" to {_p} if BPCheckPermission({_p}, "{@ClearPermission}") or BPCheckPermission({_p}, "{@AdminPermission}") = true
+	send "&c&m  &r &3/backpack delete <id> &7&o(deletes all backpacks with the given ID)" to {_p} if BPCheckPermission({_p}, "{@DeletePermission}") or BPCheckPermission({_p}, "{@AdminPermission}") = true
+	send "&c&m  &r &3/backpack forcegive <id> <level> <player> &7&o(bypasses the ID check and lets you duplicate backpacks with the same ID)" to {_p} if BPCheckPermission({_p}, "{@ForceGivePermission}") or BPCheckPermission({_p}, "{@AdminPermission}") = true
+	send "&c&m  &r &3/backpack give <id> <level> <player> &7&o(give a backpack to a player)" to {_p} if BPCheckPermission({_p}, "{@GivePermission}") or BPCheckPermission({_p}, "{@AdminPermission}") = true
+	send "&c&m  &r &3/backpack list [<page>] [<level>] &7&o(lets staff manage backpacks in a menu)" to {_p} if BPCheckPermission({_p}, "{@ListPermission}") or BPCheckPermission({_p}, "{@AdminPermission}") = true
+	send "&c&m  &r &3/backpack open <id> [<page>] &7&o(allows staff to access backpacks using a command)" to {_p} if BPCheckPermission({_p}, "{@OpenPermission}") or BPCheckPermission({_p}, "{@AdminPermission}") = true
+	send "&c&m  &r &3/backpack reload [<-s>] &7&o(reloads the skript)" to {_p} if BPCheckPermission({_p}, "{@ReloadPermission}") or BPCheckPermission({_p}, "{@AdminPermission}") = true
+	send "&c&m  &r &3/backpack view <id> [<page>] &7&o(allows staff to access backpacks using a command without being able to edit the contents)" to {_p} if BPCheckPermission({_p}, "{@ViewPermission}") or BPCheckPermission({_p}, "{@AdminPermission}") = true
+	send "&c&m  &r &3/backpack wipe -confirm &7&o(wipes all data from this backpack script)" to {_p} if BPCheckPermission({_p}, "{@WipePermission}") or BPCheckPermission({_p}, "{@AdminPermission}") = true
+	send "&6Notes: &9<> &c= required, &9[<>] &c= optional" to {_p} if BPCheckPermission({_p}, "{@ClearPermission}") or BPCheckPermission({_p}, "{@DeletePermission}") or BPCheckPermission({_p}, "{@WipePermission}") or BPCheckPermission({_p}, "{@ViewPermission}") or BPCheckPermission({_p}, "{@ReloadPermission}") or BPCheckPermission({_p}, "{@OpenPermission}") or BPCheckPermission({_p}, "{@ListPermission}") or BPCheckPermission({_p}, "{@GivePermission}") or BPCheckPermission({_p}, "{@ForceGivePermission}") or BPCheckPermission({_p}, "{@AdminPermission}") = true
+	send "&6Notes: &9id &cmust be a integer, &9level &cmust be a integer, &9page &cmust be a integer, &9player &cmust be an online player" to {_p} if BPCheckPermission({_p}, "{@ClearPermission}") or BPCheckPermission({_p}, "{@DeletePermission}") or BPCheckPermission({_p}, "{@WipePermission}") or BPCheckPermission({_p}, "{@ViewPermission}") or BPCheckPermission({_p}, "{@ReloadPermission}") or BPCheckPermission({_p}, "{@OpenPermission}") or BPCheckPermission({_p}, "{@ListPermission}") or BPCheckPermission({_p}, "{@GivePermission}") or BPCheckPermission({_p}, "{@ForceGivePermission}") or BPCheckPermission({_p}, "{@AdminPermission}") = true
+	send " " to {_p} if BPCheckPermission({_p}, "{@ClearPermission}") or BPCheckPermission({_p}, "{@DeletePermission}") or BPCheckPermission({_p}, "{@WipePermission}") or BPCheckPermission({_p}, "{@ViewPermission}") or BPCheckPermission({_p}, "{@ReloadPermission}") or BPCheckPermission({_p}, "{@OpenPermission}") or BPCheckPermission({_p}, "{@ListPermission}") or BPCheckPermission({_p}, "{@GivePermission}") or BPCheckPermission({_p}, "{@ForceGivePermission}") or BPCheckPermission({_p}, "{@AdminPermission}") = true
+	send "&3&m                              &r&6Backpack Help&3&m                              &r" to {_p}
+
+command /backpack [<text>] [<text>] [<text>] [<text>]:
+	trigger:
+		if arg-1 = "reload":
+			if arg-2 = "-s":
+				execute console command "sk reload %script%"
+			else:
+				make player execute command "sk reload %script%"
+		else if arg-1 = "download":
+			send "{@Prefix} <link:https://lianjordaan.github.io/Website/>&6Website: &9click here<reset>"
+		else if arg-1 = "author":
+			send "{@Prefix} &6This is a free script that was made by Lian."
+			send "{@Prefix} <link:https://www.youtube.com/channel/UClTU84DZbgoCNlSSZqPGImQ>&6YouTube: &9LianJordaan&r<reset>"
+			send "{@Prefix} &6Discord: &9Lian##1199"
+			send "{@Prefix} &6Minecraft: &9LianJordaan"
+			send "{@Prefix} <link:https://lianjordaan.github.io/Website/>&6Website: &9click here<reset>"
+		else if arg-1 = "wipe":
+			if player has permission "{@WipePermission}" or "{@AdminPermission}":
+				if arg-2 = "-confirm":
+					delete {Backpack::*}
+					send "{@Prefix} &cYou have wiped all backpack related data!"
+					send "{@Prefix} &c%player%, just wiped all backpack related data!" to console
+				else:
+					send "{@Prefix} {@ArgsErrorWipe}"
+			else:
+				send "{@Prefix} &cYou do not have permission to execute that command!"
+		else if arg-1 = "open":
+			if player has permission "{@OpenPermission}" or "{@AdminPermission}":
+				if arg-2 is set:
+					if {Backpack::IDs::*} contains arg-2:
+						if arg-3 is not set:
+							OpenLargeBackpack({@MaxLevel}, arg-2 parsed as integer, 1, 6, player)
+						else:
+							if arg-3 parsed as integer is set:
+								OpenLargeBackpack(arg-3 parsed as integer, arg-2 parsed as integer, 1, 6, player)
+							else:
+								send "{@Prefix} {@FatalError}"
+								send "{@Prefix} {@FatalErrorConsole}" to console
+					else:
+						send "{@Prefix} &cThere are no backpacks with that ID!"
+				else:
+					send "{@Prefix} {@ArgsErrorOpen}"
+			else:
+				send "{@Prefix} &cYou do not have permission to execute that command!"
+		else if arg-1 = "view":
+			if player has permission "{@ViewPermission}" or "{@AdminPermission}":
+				if arg-2 is set:
+					if {Backpack::IDs::*} contains arg-2:
+						if arg-3 is not set:
+							ViewLargeBackpack({@MaxLevel}, arg-2 parsed as integer, 1, 6, player)
+						else:
+							if arg-3 parsed as integer is set:
+								ViewLargeBackpack(arg-3 parsed as integer, arg-2 parsed as integer, 1, 6, player)
+							else:
+								send "{@Prefix} {@FatalError}"
+								send "{@Prefix} {@FatalErrorConsole}" to console
+					else:
+						send "{@Prefix} &cThere are no backpacks with that ID!"
+				else:
+					send "{@Prefix} {@ArgsErrorView}"
+			else:
+				send "{@Prefix} &cYou do not have permission to execute that command!"
+		else if arg-1 = "list":
+			if player has permission "{@ListPermission}" or "{@AdminPermission}":
+				if {Backpack::IDs::*} is set:
+					if arg-2 is not set:
+						if arg-3 is not set:
+							ListBackpacks(1, 6, player)
+						else:
+							if arg-3 parsed as integer is set:
+								ListBackpacks(arg-3 parsed as integer, 6, player)
+							else:
+								send "{@Prefix} {@ArgsErrorList}"
+					else:
+						if arg-2 parsed as integer is set:
+							if arg-2 parsed as integer <= {@MaxLevel}:
+								if arg-3 is not set:
+									ListBackpacks(1, 6, player, arg-2 parsed as integer)
+								else:
+									if arg-3 parsed as integer is set:
+										ListBackpacks(arg-3 parsed as integer, 6, player, arg-2 parsed as integer)
+									else:
+										send "{@Prefix} {@ArgsErrorList}"
+							else:
+								send "{@Prefix} &cThe max backpack level is &4{@MaxLevel}&c!"
+						else:
+							send "{@Prefix} {@ArgsErrorList}"
+				else:
+					send "{@Prefix} &cNo backpacks exist."
+			else:
+				send "{@Prefix} &cYou do not have permission to execute that command!"
+		else if arg-1 = "forcegive":
+			if player has permission "{@ForceGivePermission}" or "{@AdminPermission}":
+				set {_id} to arg-2 parsed as integer
+				if {_id} is set:
+					set {_level} to arg-3 parsed as integer
+					if {_level} is set:
+						if {_level} <= {@MaxLevel}:
+							set {_player} to arg-4 parsed as player
+							if {_player} is online:
+								if player is set:
+									GiveBackpack({_id}, {_level}, {_player}, "%player%", true)
+								else:
+									GiveBackpack({_id}, {_level}, {_player}, "CONSOLE", true)
+							else:
+								send "{@Prefix} &cThat player is not online!"
+						else:
+							send "{@Prefix} &cThe max backpack level is &4{@MaxLevel}&c!"
+					else:
+						send "{@Prefix} {@ArgsErrorForcegive}"
+				else:
+					send "{@Prefix} {@ArgsErrorForcegive}"
+			else:
+				send "{@Prefix} &cYou do not have permission to execute that command!"
+		else if arg-1 = "give":
+			if player has permission "{@GivePermission}" or "{@AdminPermission}":
+				set {_id} to arg-2 parsed as integer
+				if {_id} is set:
+					set {_level} to arg-3 parsed as integer
+					if {_level} is set:
+						if {_level} <= {@MaxLevel}:
+							set {_player} to arg-4 parsed as player
+							if {_player} is online:
+								if player is set:
+									GiveBackpack({_id}, {_level}, {_player}, "%player%", false)
+								else:
+									GiveBackpack({_id}, {_level}, {_player}, "CONSOLE", false)
+							else:
+								send "{@Prefix} &cThat player is not online!"
+						else:
+							send "{@Prefix} &cThe max backpack level is &4{@MaxLevel}&c!"
+					else:
+						send "{@Prefix} {@ArgsErrorgive}"
+				else:
+					send "{@Prefix} {@ArgsErrorgive}"
+			else:
+				send "{@Prefix} &cYou do not have permission to execute that command!"
+		else if arg-1 = "clear":
+			if player has permission "{@ClearPermission}" or "{@AdminPermission}":
+				set {_id} to arg-2 parsed as integer
+				if {_id} is set:
+					if {Backpack::IDs::*} contains {_id}:
+						delete {Backpack::%{_id}%::*}
+						send "{@Prefix} &cThe backpack with the ID of &e%{_id}% &chas been cleared!"
+					else:
+						send "{@Prefix} &cThere are no backpacks with that ID!"
+				else:
+					send "{@Prefix} {@ArgsErrorClear}"
+			else:
+				send "{@Prefix} &cYou do not have permission to execute that command!"
+		else if arg-1 = "delete":
+			if player has permission "{@DeletePermission}" or "{@AdminPermission}":
+				set {_id} to arg-2 parsed as integer
+				if {_id} is set:
+					if {Backpack::IDs::*} contains {_id}:
+						remove {_id} from {Backpack::IDs::*}
+						delete {Backpack::%{_id}%::*}
+						send "{@Prefix} &cThe backpack with the ID of &e%{_id}% &chas been deleted!"
+					else:
+						send "{@Prefix} &cThere are no backpacks with that ID!"
+				else:
+					send "{@Prefix} {@ArgsErrorDelete}"
+			else:
+				send "{@Prefix} &cYou do not have permission to execute that command!"
+		else if arg-1 = "help":
+			BackpackHelp(player)
+		else:
+			BackpackHelp(player)
+
+function GiveBackpack(id: integer, l: integer, p: player, e: text, force: boolean):
+	if {_force} = false:
+		if {Backpack::IDs::*} contains {_id}:
+			if {_e} parsed as player is online:
+				send "{@Prefix} &cA backpack with that ID already exists. To bypass this, Please use &7&o/backpack forcegive" to {_e} parsed as player
+			else:
+				send "{@Prefix} &cA backpack with that ID already exists. To bypass this, Please use &7&o/backpack forcegive" to console
+			stop
+		add {_id} to {Backpack::IDs::*}
+		set {_backpack} to skull of {_p} with nbt "{@SkullNBT}"
+		set name of {_backpack} to "&eBackpack"
+		add " " to {_lore::*}
+		add "&7Level: &e%{_l}%" to {_lore::*}
+		add "&7Size: &e%{_l} * 9%" to {_lore::*}
+		add "&7ID: %{_id}%" to {_lore::*}
+		add " " to {_lore::*}
+		add "&eRight Click &7to open" to {_lore::*}
+		set {_num} to 1
+		loop {_lore::*}:
+			set line {_num} of lore of {_backpack} to loop-value
+			add 1 to {_num}
+		give {_backpack} to {_p}
+		send "{@Prefix} &6%{_e}% &ahas given you a level &e%{_l}% &abackpack with an ID of &e%{_id}%" to {_p}
+		if {_e} parsed as player is online:
+			send "{@Prefix} &6%{_p}% &ahas been given a level &e%{_l}% &abackpack with an ID of &e%{_id}%" to {_e} parsed as player
+		else:
+			send "{@Prefix} &6%{_p}% &ahas been given a level &e%{_l}% &abackpack with an ID of &e%{_id}%" to console
+		send "{@Prefix} &6%{_e}% &ahas given a level &e%{_l}% &abackpack with an ID of &e%{_id}% &ato %{_p}%" to console
+	if {_force} = true:
+		if {Backpack::IDs::*} does not contain {_id}:
+			add {_id} to {Backpack::IDs::*}
+		set {_backpack} to skull of {_p} with nbt "{@SkullNBT}"
+		set name of {_backpack} to "&eBackpack"
+		add " " to {_lore::*}
+		add "&7Level: &e%{_l}%" to {_lore::*}
+		add "&7Size: &e%{_l} * 9%" to {_lore::*}
+		add "&7ID: %{_id}%" to {_lore::*}
+		add " " to {_lore::*}
+		add "&eRight Click &7to open" to {_lore::*}
+		set {_num} to 1
+		loop {_lore::*}:
+			set line {_num} of lore of {_backpack} to loop-value
+			add 1 to {_num}
+		give {_backpack} to {_p}
+		send "{@Prefix} &6%{_e}% &ahas given you a level &e%{_l}% &abackpack with an ID of &e%{_id}%" to {_p}
+		if {_e} parsed as player is online:
+			send "{@Prefix} &6%{_p}% &ahas been given a level &e%{_l}% &abackpack with an ID of &e%{_id}%" to {_e} parsed as player
+		else:
+			send "{@Prefix} &6%{_p}% &ahas been given a level &e%{_l}% &abackpack with an ID of &e%{_id}%" to console
+		send "{@Prefix} &6%{_e}% &ahas given a level &e%{_l}% &abackpack with an ID of &e%{_id}% &ato %{_p}%" to console
+
+#============================================Code End============================================
