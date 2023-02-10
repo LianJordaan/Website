@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="style.css">
+		<title>Me</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Silkscreen">
+	</head>
+	<body>
+		<div class="navigation">
+			<a href="index.html">Home</a>
+			<a href="scripts.html">Scripts</a>
+			<a href="plugins.html">Plugins</a>
+			<a href="delphi.html">Delphi</a>
+			<a href="diamondfire.html" class="active">DiamondFire</a>
+		</div>
+		<div>
+			<textarea name="item-id" id="item-id" cols="30" rows="1" style="resize: none;"></textarea>
+			<textarea name="item-name" id="item-name" cols="60" rows="1" style="resize: none;"></textarea>
+			<textarea name="item-value" id="item-value" cols="80" rows="40" style="resize: none;"></textarea>
+			<select name="value-types" id="value-types">
+				<option value="text">Text</option>
+				<option value="number">Number</option>
+			  </select>
+			<script>
+				document.getElementById("item-id").addEventListener("input", (e) => {
+					document.getElementById("item-id").value = document.getElementById("item-id").value.replace('\n', '');
+					
+				});
+				document.getElementById("item-name").addEventListener("input", (e) => {
+					document.getElementById("item-name").value = document.getElementById("item-name").value.replace('\n', '');
+					
+				});
+			</script>
+		</div>
+	</body>
+</html>
