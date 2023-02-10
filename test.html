@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #game-canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="game-canvas" width="500" height="300"></canvas>
+    <script>
+      // Get a reference to the canvas element
+      const canvas = document.getElementById("game-canvas");
+      // Get a 2D rendering context for the canvas
+      const ctx = canvas.getContext("2d");
+
+      // Set up game variables
+      let ballX = canvas.width / 2;
+      let ballY = canvas.height / 2;
+      let ballSpeedX = 5;
+      let ballSpeedY = 5;
+      let paddle1Y = 250;
+      let paddle2Y = 250;
+      const paddleHeight = 50;
+      const paddleWidth = 10;
+
+      function drawBall() {
+        ctx.beginPath();
+        ctx.arc(ballX, ballY, 10, 0, Math.PI * 2);
+        ctx.fillStyle = "white";
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      function drawPaddle1() {
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, paddle1Y, paddleWidth, paddleHeight);
+      }
+
+      function drawPaddle2() {
+        ctx.fillStyle = "white";
+        ctx.fillRect(canvas.width - paddleWidth, paddle2Y, paddleWidth, paddleHeight);
+      }
+
+      function draw() {
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw the ball
+        drawBall();
+
+        // Draw the paddles
+        drawPaddle1();
+        drawPaddle2();
+
+        // Update the ball position
+        ballX += ballSpeedX;
+        ballY += ballSpeedY;
+
+        // Bounce the ball off the walls
+        if (ballX > canvas.width - 10 || ballX < 10) {
+          ballSpeedX = -ballSpeedX;
+        }
+        if (ballY > canvas.height - 10 || ballY < 10) {
+          ballSpeedY = -ballSpeedY;
+        }
+
+        // Check for collisions with the paddles
+        if (ballX < paddleWidth + 10 && ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
+          ballSpeedX = -ballSpeedX;
+        }
+        if (ballX > canvas.width - paddleWidth - 10 && ballY > paddle2Y && ballY < paddle2Y + paddleHeight) {
+          ballSpeedX = -ballSpeedX;
+        }
+      }
+
+      setInterval(draw, 16);
+    </script>
+  </body>
+</html>
