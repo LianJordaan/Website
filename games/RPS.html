@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="../style.css">
+		<title>Me</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Silkscreen">
+	</head>
+	<body scrolling="no">
+		<script src="../script.js"></script>
+		<div class="navigation">
+			<a href="../index.html">Home</a>
+			<a href="../scripts.html">Scripts</a>
+			<a href="../plugins.html">Plugins</a>
+			<a href="../delphi.html">Delphi</a>
+			<a href="../games.html" class="active">Games</a>
+		</div>
+		<div id="scriptbox-RPS" scrolling="no">
+
+			<h3 id="dropdown-text-RPS">This is my own version of the popular game 'RPS'. <u>This site might break on small screens!</u> <a href="../files/RPS.html" style="text-decoration: none; color: coral; text-decoration: underline;" target="_blank">Click to open in another page</a></h3>
+
+			<div scrolling="no" style="text-align:center; margin-top: -1.5%;">
+				<iframe width="1100" height="250" scrolling="no" src="../files/RPS.html" frameborder="0"></iframe>
+			</div>
+
+			<h3 class="RPS.download" style="text-align: center;"><a id="scriptdownload-RPS" href="../files/RPS.html" download="RPS.html">Download</a></h3>
+		</div>
+		<script>
+			LoadDropdowns();
+		</script>
+		<style>
+			body {
+				overflow: hidden;
+			}
+
+			iframe {
+				position: relative;
+          		top: 30%;
+				left: 0%;
+			}
+
+			#dropdown-text-RPS {
+				color:gray;
+				font-family: 'Rubik';
+				font-weight: lighter;
+				position: relative;
+				top: 8%;
+				left: 2%;
+				width: 96%;
+				margin: 0;
+				text-align: center;
+			}
+
+			#scriptdownload-RPS {
+				text-decoration: none;
+				color: white;
+				cursor: pointer;
+				top: 130%;
+				position: relative;
+				padding: 10px 12px;
+				border-radius: 10px;
+				transition: all .3s;
+				font-family: 'Comfortaa';
+			}
+
+			#scriptbox-RPS {
+				margin: 30px;
+				width: 95%;
+				height: 50vh;
+				border: 1px solid gray;
+				display: flex;
+				align-items: left;
+				flex-direction: column;
+				border-radius: 20px;
+			}
+
+			#scriptdownload-RPS:hover {
+				background-color: white;
+				color: black;
+			}
+		</style>
+	</body>
+</html>
