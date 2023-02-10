@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .game-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      width: 500px;
+      height: 500px;
+      margin: 0 auto;
+    }
+
+    .card {
+      width: 100px;
+      height: 100px;
+      background-color: gray;
+      color: white;
+      text-align: center;
+      font-size: 60px;
+      margin: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .card.flipped {
+      background-color: white;
+      color: black;
+    }
+
+
+  </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="card" id="card1">A</div>
+        <div class="card" id="card2">A</div>
+        <div class="card" id="card3">B</div>
+        <div class="card" id="card4">B</div>
+        <div class="card" id="card5">C</div>
+        <div class="card" id="card6">C</div>
+    </div>  
+
+  <script>
+    const cards = document.querySelectorAll('.card');
+    let flippedCards = [];
+    let lockBoard = false;
+    
+    function flipCard() {
+      if (lockBoard) return;
+      if (this === flippedCards[0]) return;
+    
+      this.classList.add('flipped');
+    
+      if (flippedCards.length === 0) {
+        flippedCards[0] = this;
+        return;
+      } else {
+        flippedCards[1] = this;
+        checkForMatch();
+      }
+    }
+    
+    function checkForMatch() {
+      let isMatch = flippedCards[0].innerHTML === flippedCards[1].innerHTML;
+    
+      isMatch ? disableCards() : unflipCards();
+    }
+    
+    function disableCards() {
+      flippedCards[0].removeEventListener('click', flipCard);
+      flippedCards[1].removeEventListener('click', flipCard);
+      resetBoard();
+    }
+    
+    function unflipCards() {
+      lockBoard = true;
+    
+      setTimeout(() => {
+        flippedCards[0].classList.remove('flipped');
+        flippedCards[1].classList.remove('flipped');
+        resetBoard();
+      }, 1500);
+    }
+    
+    function resetBoard() {
+      [flippedCards, lockBoard] = [[], false];
+    }
+    
+    (function shuffle() {
+      cards.forEach(card => {
+        let randomPos = Math.floor(Math.random() * 12);
+        card.style.order = randomPos;
+      });
+    })();
+    
+    cards.forEach(card => card.addEventListener('click', flipCard));
+    
+      </script>
+</body>
+</html>
