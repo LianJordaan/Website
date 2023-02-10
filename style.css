@@ -74,7 +74,24 @@ html, body {
 	font-family: 'Comfortaa';
 }
 
+#scriptdownload-big {
+	text-decoration: none;
+	color: white;
+	cursor: pointer;
+	top: -5px;
+	position: relative;
+	padding: 10px 12px;
+	border-radius: 10px;
+	transition: all .3s;
+	font-family: 'Comfortaa';
+}
+
 #scriptdownload:hover {
+	background-color: white;
+	color: black;
+}
+
+#scriptdownload-big:hover {
 	background-color: white;
 	color: black;
 }
@@ -122,6 +139,17 @@ html, body {
 	border-radius: 20px;
 }
 
+#scriptbox-big {
+	margin: 30px;
+	width: 95%;
+	height: 85vh;
+	border: 1px solid gray;
+	display: flex;
+	align-items: left;
+	flex-direction: column;
+	border-radius: 20px;
+}
+
 #dropdown-button {
 	position: relative;
 	z-index: 1;
@@ -155,6 +183,18 @@ html, body {
 	font-weight: lighter;
 	position: relative;
 	top: 6%;
+	left: 2%;
+	width: 96%;
+	margin: 0;
+	text-align: center;
+}
+
+#dropdown-text-big {
+	color:gray;
+	font-family: 'Rubik';
+	font-weight: lighter;
+	position: relative;
+	top: 1.5%;
 	left: 2%;
 	width: 96%;
 	margin: 0;
