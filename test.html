@@ -13,35 +13,113 @@
     }
 
     .card {
-      width: 100px;
-      height: 100px;
-      background-color: gray;
-      color: white;
-      text-align: center;
-      font-size: 60px;
-      margin: 10px;
-      border-radius: 10px;
-      cursor: pointer;
+        width: 100px;
+        height: 100px;
+        perspective: 1000px;
+        position: relative;
+        float: left;
+        margin: 10px;
     }
 
-    .card.flipped {
-      background-color: white;
-      color: black;
+    .card-front, .card-back {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        backface-visibility: hidden;
+        transition: transform 0.6s;
     }
 
+    .card-front {
+        background-color: lightblue;
+        transform: rotateY(180deg);
+    }
 
-  </style>
+    .card-back {
+        background-color: lightgray;
+        transform: rotateY(0deg);
+    }
+
+    .flipped .card-front {
+        transform: rotateY(0deg);
+    }
+
+    .flipped .card-back {
+        transform: rotateY(-180deg);
+    }
+
+    .card-image {
+        width: 100px;
+        height: 100px;
+    }
+</style>
 </head>
 <body>
     <div class="game-container">
-        <div class="card" id="card1">A</div>
-        <div class="card" id="card2">A</div>
-        <div class="card" id="card3">B</div>
-        <div class="card" id="card4">B</div>
-        <div class="card" id="card5">C</div>
-        <div class="card" id="card6">C</div>
+        <div class="card" id="card1" onclick="flipCard(this)">
+            <div class="card-front">
+                <img class="card-image" src="images/cat.png" alt="front image">
+            </div>
+            <div class="card-back">
+                <img class="card-image" src="images/back.jpg" alt="back image">
+            </div>
+        </div>
+        <div class="card" id="card1" onclick="flipCard(this)">
+            <div class="card-front">
+                <img class="card-image" src="images/cat.png" alt="front image">
+            </div>
+            <div class="card-back">
+                <img class="card-image" src="images/back.jpg" alt="back image">
+            </div>
+        </div>
+        <div class="card" id="card2" onclick="flipCard(this)">
+            <div class="card-front">
+                <img class="card-image" src="images/dog.png" alt="front image">
+            </div>
+            <div class="card-back">
+                <img class="card-image" src="images/back.jpg" alt="back image">
+            </div>
+        </div>
+        <div class="card" id="card2" onclick="flipCard(this)">
+            <div class="card-front">
+                <img class="card-image" src="images/dog.png" alt="front image">
+            </div>
+            <div class="card-back">
+                <img class="card-image" src="images/back.jpg" alt="back image">
+            </div>
+        </div>
+        <div class="card" id="card3" onclick="flipCard(this)">
+            <div class="card-front">
+                <img class="card-image" src="images/fish.png" alt="front image">
+            </div>
+            <div class="card-back">
+                <img class="card-image" src="images/back.jpg" alt="back image">
+            </div>
+        </div>
+        <div class="card" id="card3" onclick="flipCard(this)">
+            <div class="card-front">
+                <img class="card-image" src="images/fish.png" alt="front image">
+            </div>
+            <div class="card-back">
+                <img class="card-image" src="images/back.jpg" alt="back image">
+            </div>
+        </div>
     </div>  
 
+
+
+    <script>
+        function flipCard(card) {
+            card.classList.toggle("flipped");
+        }
+    </script>
+    <script> 
+        cards.forEach(card => {
+          card.addEventListener('click', function() {
+            this.querySelector('.back').style.display = 'none';
+            this.querySelector('.front').style.display = 'block';
+          });
+        });
+    </script>
   <script>
     const cards = document.querySelectorAll('.card');
     let flippedCards = [];
